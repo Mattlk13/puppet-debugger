@@ -1,5 +1,26 @@
 ## Unreleased
 
+## 0.18.0
+- Add bundler as a dependency
+- Add ability to filter out classes
+- Add ability to filter out resources
+- Add ability to supply a catalog
+- Add vendormoduledir to module paths
+
+## 0.17.0
+- Fix bolt issue when the catalog is referenced
+- Fix bolt issue when scriptcompiler scope is used
+  and the debugger tries to expand the resources
+  in the catalog.
+
+## 0.16.0
+- Load bolt puppet modules if bolt exists
+- Fix bolt datatype rendering issues
+  
+## 0.15.2
+- Fixes issue with bundler and auto complete again
+
+
 ## 0.15.1
 - Fixes issue with bundler and auto complete
 

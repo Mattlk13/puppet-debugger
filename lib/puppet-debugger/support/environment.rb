@@ -17,7 +17,14 @@ module PuppetDebugger
         # add the puppet-debugger directory so we can load any defined functions
         dirs << File.join(Puppet[:environmentpath], default_puppet_env_name, 'modules') unless Puppet[:environmentpath].empty?
         dirs << Puppet.settings[:basemodulepath].split(File::PATH_SEPARATOR)
-        dirs.flatten
+        dirs << Puppet.settings[:vendormoduledir].split(File::PATH_SEPARATOR) if Puppet.settings[:vendormoduledir]
+        dirs << bolt_modules
+        dirs.flatten.compact.uniq
+      end
+
+      def bolt_modules
+        spec = Gem::Specification.latest_specs.find { |spec| spec.name.eql?('bolt') }
+        bolt_modules = File.join(spec.full_gem_path, 'bolt-modules') if spec
       end
 
       # returns all the modules paths defined in the environment

@@ -25,6 +25,7 @@ module PuppetDebugger
       Puppet[:static_catalogs] = false unless Puppet.settings[:static_catalogs].nil?
       set_remote_node_name(options[:node_name])
       initialize_from_scope(options[:scope])
+      set_catalog(options[:catalog])
       @log_level = "notice"
       @out_buffer = options[:out_buffer] || $stdout
       @html_mode = options[:html_mode] || false
@@ -106,7 +107,7 @@ module PuppetDebugger
     end
 
     def contains_resources?(result)
-      !Array(result).flatten.find { |r| r.class.to_s =~ /Puppet::Pops::Types/ }.nil?
+      !Array(result).flatten.find { |r| r.class.to_s =~ /Puppet::Pops::Types::PResourceType/ }.nil?
     end
 
     def normalize_output(result)
@@ -265,6 +266,7 @@ or "help" to show the help screen.
         opt :play, "Url or file to load from", required: false, type: String
         opt :run_once, "Evaluate and quit", required: false, default: false
         opt :node_name, "Remote Node to grab facts from", required: false, type: String
+        opt :catalog, "Import a catalog file to inspect", required: false, type: String
         opt :quiet, "Do not display banner", required: false, default: false
       end
       options = opts.merge(options)
